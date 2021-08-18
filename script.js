@@ -78,7 +78,7 @@ app.post("/send", async (req, res, next) => {
 		auth: {
 			// should be replaced with real sender's account
 			user: "lordorionrules@gmail.com",
-			pass: "preshyjonesrules066",
+			pass: process.env.PASSWORD,
 		},
 		tls: {
 			rejectUnauthorized: false,
