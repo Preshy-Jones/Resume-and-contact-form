@@ -1,11 +1,23 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
+const mongoose = require("mongoose");
+const Contact = require("./models/Contact");
 var app = express();
 const port = process.env.PORT || 8001;
 
 const dotenv = require("dotenv");
 
 dotenv.config();
+mongoose.connect(
+	process.env.DB_CONNECT,
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+		useFindAndModify: false,
+	},
+	() => console.log("connected to mongodb")
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +31,28 @@ app.get("/", (req, res) => {
 
 app.get("/success", (req, res) => {
 	res.render("success", { msg: "" });
+});
+
+app.post("/contact", async (req, res) => {
+	//res.send(req.body);
+	const { name, email, subject, phone, message } = req.body;
+	contact = new Contact({
+		name,
+		email,
+		subject,
+		phone,
+		message,
+	});
+	await contact.save();
+	res.render("success", { msg: "Your Message has been received" });
+
+	// res.json({
+	// 	name: contact.name,
+	// 	email: contact.email,
+	// 	subject: contact.subject,
+	// 	phone: contact.phone,
+	// 	message: contact.message,
+	// });
 });
 
 app.post("/send", async (req, res, next) => {
