@@ -3,6 +3,10 @@ const nodemailer = require("nodemailer");
 var app = express();
 const port = process.env.PORT || 8001;
 
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
