@@ -31,7 +31,7 @@ app.post("/send", async (req, res, next) => {
 	<h3>Message</h3>
 	<p>${req.body.message}</p>
 	`;
-	// console.log(process.env.PASSWORD);
+	console.log(process.env.PASSWORD);
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
 		host: "smtp.gmail.com",
